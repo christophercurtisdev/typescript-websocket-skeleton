@@ -2,28 +2,41 @@ import Reactor from "./Classes/Reactor.js";
 import SimpleSocket from "./Classes/SimpleSocket.js";
 import $ from "jquery";
 
-const reactorSocket = new SimpleSocket('ws://localhost:8082');
-const reactor = new Reactor();
-
 $(function() {
+
+    const reactorSocket = new SimpleSocket('ws://localhost:8082');
+    const reactor = new Reactor();
+
     var createLobbyButton = $('#createLobbyButton');
     var joinLobbyButton = $('#joinLobbyButton');
     var sendInstructionButton = $('#sendInstructionButton');
     var sendMessageButton = $('#sendMessageButton');
+    initialiseLobbyButtonListeners();
+    initialisePlayScreen();
 
-    createLobbyButton.on('click', function() {
-        reactorSocket.sendLobbyRequest({ type: 'create' }); // Send a lobby request object
-    });
+    function initialiseLobbyButtonListeners() {
+        createLobbyButton.on('click', function() {
+            reactorSocket.sendLobbyRequest({ request: 'create' }); // Send a lobby request object
+        });
 
-    joinLobbyButton.on('click', function() {
-        reactorSocket.sendLobbyRequest({ type: 'join', lobbyCode: 'ABC123' }); // Send a lobby request object
-    });
+        joinLobbyButton.on('click', function() {
+            reactorSocket.sendLobbyRequest({ request: 'join', lobbyCode: 'ABC123' }); // Send a lobby request object
+        });
+    }
 
-    sendInstructionButton.on('click', function() {
-        reactorSocket.sendInstruction({ input: 'some-cool-button', value: 'pressed' }); // Send an instruction object
-    });
+    function initialisePlayScreen() {
 
-    sendMessageButton.on('click', function() {
-        reactorSocket.sendMessage({ value: 'pressed' }); // Send a message object
-    });
+    }
+
+    function initialiseControllerListeners() {
+        sendInstructionButton.on('click', function() {
+            reactorSocket.sendInstruction({ input: 'some-cool-button', value: 'pressed' }); // Send an instruction object
+        });
+    }
+
+    function initialiseStatsListeners() {
+        sendMessageButton.on('click', function() {
+            reactorSocket.sendMessage({ value: 'pressed' }); // Send a message object
+        });
+    }
 });

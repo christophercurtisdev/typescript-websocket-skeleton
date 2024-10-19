@@ -3,46 +3,52 @@ import LobbyRequest from "../Interfaces/LobbyRequest";
 import Message from "../Interfaces/Message";
 
 export default class SimpleSocket {
-    webSocket;
+    webSocket: WebSocket;
+    types: any = { 
+        INSTRUCTION: 'instruction', 
+        MESSAGE: 'message', 
+        LOBBY_REQUEST: 'lobby_request' 
+    };
 
     constructor(url: string) {
         this.webSocket = new WebSocket(url);
         this.initialiseWebsocket();
     }
 
-    sendRaw(data: any) {
-        this.webSocketSend(data);
-    }
-
     sendInstruction(data: Instruction) {
-        this.sendRaw(data);
+        this.sendRaw(data, this.types.INSTRUCTION);
     }
 
     sendMessage(data: Message) {
-        this.sendRaw(data);
+        this.sendRaw(data, this.types.MESSAGE);
     }
 
     sendLobbyRequest(data: LobbyRequest) {
-        this.sendRaw(data)
+        this.sendRaw(data, this.types.LOBBY_REQUEST);
+    }
+
+    private sendRaw(data: any, type: string) {
+        data.type = type;
+        this.webSocketSend(data);
     }
     
-    initialiseWebsocket() {
+    private initialiseWebsocket() {
         this.webSocket.onopen = (event) => this.webSocketOpen(event);
         this.webSocket.onmessage = (data) => this.webSocketMessage(data)
     }
 
 
-    webSocketOpen(event: Event) {
+    private webSocketOpen(event: Event) {
         this.webSocketSend({ "success": true, "data": Math.random() });
     }
 
-    webSocketSend(request: any) {
+    private webSocketSend(request: any) {
         let data = JSON.stringify(request);
         console.log(`Client: ${data}`);
         this.webSocket.send(data);
     }
 
-    webSocketMessage(response: MessageEvent<any>) {
+    private webSocketMessage(response: MessageEvent<any>) {
         let data = response.data;
         console.log('Server: '+data);
     }

@@ -25,6 +25,7 @@ export default class Server {
     message(data: RawData)
     {
         let info = JSON.parse(data.toString());
+        console.log('Client:');
         console.log(info);
     }
 }
