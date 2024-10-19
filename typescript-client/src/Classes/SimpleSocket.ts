@@ -1,16 +1,29 @@
+import Instruction from "../Interfaces/Instruction";
+import LobbyRequest from "../Interfaces/LobbyRequest";
+import Message from "../Interfaces/Message";
+
 export default class SimpleSocket {
     webSocket;
 
     constructor(url: string) {
-        console.log('Creating Reactor Socket...');
-
         this.webSocket = new WebSocket(url);
         this.initialiseWebsocket();
     }
 
-    send(data: string) {
-        // This is what you call for a call and response from the server
+    sendRaw(data: any) {
         this.webSocketSend(data);
+    }
+
+    sendInstruction(data: Instruction) {
+        this.sendRaw(data);
+    }
+
+    sendMessage(data: Message) {
+        this.sendRaw(data);
+    }
+
+    sendLobbyRequest(data: LobbyRequest) {
+        this.sendRaw(data)
     }
     
     initialiseWebsocket() {
@@ -20,8 +33,6 @@ export default class SimpleSocket {
 
 
     webSocketOpen(event: Event) {
-        console.log('Successfully connected: ');
-        console.log(event)
         this.webSocketSend({ "success": true, "data": Math.random() });
     }
 
