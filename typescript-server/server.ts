@@ -1,4 +1,4 @@
-import WebSocket, { RawData, WebSocketServer } from 'ws';
+import WebSocket, { RawData, WebSocketServer, ServerOptions } from 'ws';
 
 export default class Server {
 
@@ -6,9 +6,8 @@ export default class Server {
     lobbies = [];
     players: WebSocket[] = [];
 
-
-    constructor() {
-        this.server = new WebSocketServer({ port: 8082 });
+    constructor(port: ServerOptions<typeof WebSocket, any>) {
+        this.server = new WebSocketServer(port);
 
         this.server.on('connection', (webSocket) => this.onConnection(webSocket));
     }
