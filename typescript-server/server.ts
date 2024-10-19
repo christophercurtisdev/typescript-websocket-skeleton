@@ -6,8 +6,8 @@ export default class Server {
     lobbies = [];
     players: WebSocket[] = [];
 
-    constructor(port: ServerOptions<typeof WebSocket, any>) {
-        this.server = new WebSocketServer(port);
+    constructor(options: ServerOptions<typeof WebSocket, any>) {
+        this.server = new WebSocketServer(options);
 
         this.server.on('connection', (webSocket) => this.onConnection(webSocket));
     }
@@ -25,7 +25,8 @@ export default class Server {
     message(data: RawData)
     {
         let info = JSON.parse(data.toString());
-        console.log('Client:');
-        console.log(info);
+        this.players.forEach(player => {
+            player.send(data.toString());
+        });
     }
 }

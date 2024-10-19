@@ -1,18 +1,16 @@
-import Reactor from "./Classes/Reactor.js";
 import SimpleSocket from "./Classes/SimpleSocket.js";
 import $ from "jquery";
 
 $(function() {
 
     const reactorSocket = new SimpleSocket('ws://localhost:8082');
-    const reactor = new Reactor();
 
     var createLobbyButton = $('#createLobbyButton');
     var joinLobbyButton = $('#joinLobbyButton');
     var sendInstructionButton = $('#sendInstructionButton');
     var sendMessageButton = $('#sendMessageButton');
     initialiseLobbyButtonListeners();
-    initialisePlayScreen();
+    initialiseReactorInterface();
 
     function initialiseLobbyButtonListeners() {
         createLobbyButton.on('click', function() {
@@ -24,7 +22,7 @@ $(function() {
         });
     }
 
-    function initialisePlayScreen() {
+    function initialiseReactorInterface() {
 
     }
 

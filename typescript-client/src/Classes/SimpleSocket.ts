@@ -1,6 +1,6 @@
-import Instruction from "../Interfaces/Instruction";
-import LobbyRequest from "../Interfaces/LobbyRequest";
-import Message from "../Interfaces/Message";
+import Instruction from "../Interfaces/Requests/InstructionInterface";
+import LobbyRequest from "../Interfaces/Requests/LobbyRequestInterface";
+import Message from "../Interfaces/Requests/MessageInterface";
 
 export default class SimpleSocket {
     webSocket: WebSocket;
@@ -39,17 +39,17 @@ export default class SimpleSocket {
 
 
     private webSocketOpen(event: Event) {
-        this.webSocketSend({ "success": true, "data": Math.random() });
+        
     }
 
     private webSocketSend(request: any) {
-        let data = JSON.stringify(request);
+        let data: string = JSON.stringify(request);
         console.log(`Client: ${data}`);
         this.webSocket.send(data);
     }
 
     private webSocketMessage(response: MessageEvent<any>) {
-        let data = response.data;
-        console.log('Server: '+data);
+        let data: Response = response.data;
+        console.log(`Server: ${data}`);
     }
 }
