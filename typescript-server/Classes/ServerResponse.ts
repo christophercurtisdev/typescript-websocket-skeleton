@@ -1,5 +1,5 @@
-import ControllerData from "./ControllerData";
-import InspectorData from "./InspectorData";
+import ControllerData from "./Data/ControllerData";
+import InspectorData from "./Data/InspectorData";
 
 export default class ServerResponse {
     status: string
