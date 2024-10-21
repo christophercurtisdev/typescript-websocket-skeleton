@@ -3,3 +3,4 @@ typescript-client/dist/
 typescript-server/node_modules/
 typescript-server/dist/
 typescript-client/public/index.js
+typescript-client/public/index.css
