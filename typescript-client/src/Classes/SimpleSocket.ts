@@ -1,13 +1,13 @@
-import Instruction from "../Interfaces/Requests/InstructionInterface";
+import BoardData from "../Interfaces/Requests/BoardDataInterface";
 import LobbyRequest from "../Interfaces/Requests/LobbyRequestInterface";
 import Message from "../Interfaces/Requests/MessageInterface";
 
 export default class SimpleSocket {
     webSocket: WebSocket;
-    types: any = { 
-        INSTRUCTION: 'instruction', 
-        MESSAGE: 'message', 
-        LOBBY_REQUEST: 'lobby_request' 
+    types: any = {
+        CLIENT_LOBBY_REQUEST: 'LOBBY_REQUEST',
+        CLIENT_BOARD_REQUEST: 'BOARD_UPDATE',
+        CLIENT_MESSAGE_REQUEST: 'MESSAGE'
     };
 
     constructor(url: string) {
@@ -15,16 +15,17 @@ export default class SimpleSocket {
         this.initialiseWebsocket();
     }
 
-    sendInstruction(data: Instruction) {
-        this.sendRaw(data, this.types.INSTRUCTION);
+    sendBoardData(boardData: BoardData) {
+        let data = Object.fromEntries(boardData.board);
+        this.sendRaw({data: data}, this.types.CLIENT_BOARD_REQUEST);
     }
 
     sendMessage(data: Message) {
-        this.sendRaw(data, this.types.MESSAGE);
+        this.sendRaw({data: data}, this.types.CLIENT_MESSAGE_REQUEST);
     }
 
     sendLobbyRequest(data: LobbyRequest) {
-        this.sendRaw(data, this.types.LOBBY_REQUEST);
+        this.sendRaw({data: data}, this.types.CLIENT_LOBBY_REQUEST);
     }
 
     private sendRaw(data: any, type: string) {

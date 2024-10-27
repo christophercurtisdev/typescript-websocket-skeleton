@@ -33,32 +33,37 @@ export default class Player {
     }
 
     parseMessage(clientData: RawData) : ServerResponse {
-        let clientMessage = JSON.parse(clientData.toString()) as ClientRequest;
         let responseData = {} as PlayerData;
-        switch (clientMessage.type.toUpperCase()) {
-            case Player.CLIENT_LOBBY_REQUEST:
-                responseData = this.lobbyRequest(clientMessage);
-                break;
-            case Player.CLIENT_BOARD_REQUEST:
-                responseData = this.boardUpdate(clientMessage);
-                break;
-            case Player.CLIENT_MESSAGE_REQUEST:
-                responseData = this.playerMessage(clientMessage);
-                break;
+        try {
+            let clientMessage = JSON.parse(clientData.toString()) as ClientRequest;
+            switch (clientMessage.type.toUpperCase()) {
+                case Player.CLIENT_LOBBY_REQUEST:
+                    responseData = this.lobbyRequest(clientMessage);
+                    break;
+                case Player.CLIENT_BOARD_REQUEST:
+                    responseData = this.boardUpdate(clientMessage);
+                    break;
+                case Player.CLIENT_MESSAGE_REQUEST:
+                    responseData = this.playerMessage(clientMessage);
+                    break;
+            }
+            return new ServerResponse(responseData);
+        } catch(e: any) {
+            console.log(e.message);
+            return ServerResponse.failedResponse();
         }
-        let response = new ServerResponse(responseData);
-        return response;
     }
 
     lobbyRequest(clientMessage: any) : PlayerData
     {
-        if (clientMessage.request == 'join') {
+        let data = clientMessage.data;
+        if (data.request == 'join') {
             let data = new InspectorData();
             data.stats = ['Stats information'];
             return data;
-        } else if (clientMessage.request == 'create') {
+        } else if (data.request == 'create') {
             let data = new ControllerData();
-            data.board = ['Board information'];
+            data.board = new Map();
             return data;
         }
         return new PlayerData();
