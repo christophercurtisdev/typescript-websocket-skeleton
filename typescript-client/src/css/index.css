@@ -1,0 +1,29 @@
+@import "background.css";
+@import "switch.css";
+@import "rangeSlider.css";
+
+.resizable {
+    width: 50%;
+    border-radius: 0.75rem;
+    padding: 20px;
+    margin: 1rem;
+    background-color: #FFFFFF40;
+    color: white;
+    font-size: 20px;
+    font-family: sans-serif;
+    overflow: hidden;
+
+    touch-action: none;
+
+    /* This makes things *much* easier */
+    box-sizing: border-box;
+}
+
+.draggable {
+    width: fit-content;
+    background-color: #FFFFFF40;
+    color: white;
+    border-radius: 0.75em;
+    touch-action: none;
+    user-select: none;
+}

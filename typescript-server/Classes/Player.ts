@@ -43,7 +43,8 @@ export default class Player {
                 responseData = this.boardUpdate(clientMessage);
                 break;
             case Player.CLIENT_MESSAGE_REQUEST:
-                responseData = this.playerMessage(clientMessage)
+                responseData = this.playerMessage(clientMessage);
+                break;
         }
         let response = new ServerResponse(responseData);
         return response;
