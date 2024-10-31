@@ -1,16 +1,17 @@
 {
   "scripts": {
-    "watch": "npx tailwindcss -i ./src/input.css -o ./public/index.css -w",
+    "watch": "npx sass ./src/scss/index.scss ./public/css/index.css -w",
     "build": "npm run setup-build && npm run create-build-modules && npm run compile-build-modules && npm run compile-build-style",
     "setup-build": "cp package.json dist/package.json && tsc -b",
     "create-build-modules": "cd dist && npm install --only=production && cd ..",
     "compile-build-modules": "npx browserify dist/main.js -o public/index.js",
-    "compile-build-style": "rm ./public/css -R && cp ./src/css ./public/css -R"
+    "compile-build-style": "npx sass ./src/scss/index.scss ./public/css/index.css"
   },
   "devDependencies": {
     "@interactjs/types": "^1.10.27",
     "@types/jquery": "^3.5.31",
     "browserify": "^17.0.1",
+    "sass": "^1.80.5",
     "typescript": "^5.6.3"
   },
   "dependencies": {

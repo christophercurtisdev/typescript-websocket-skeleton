@@ -1,5 +1,3 @@
-@import "background.css";
-@import "switch.css";
 
 .resizable {
     width: 50%;
@@ -13,12 +11,11 @@
     overflow: hidden;
 
     touch-action: none;
-
-    /* This makes things *much* easier */
     box-sizing: border-box;
 }
 
 .draggable {
+    position: absolute;
     width: fit-content;
     background-color: #FFFFFF40;
     color: white;

@@ -120,3 +120,9 @@
     text-shadow: rgb(0, 0, 0) 0 0 2px, rgb(255, 0, 0) 0 0 9px, rgb(255,255,255) 0 0 15px;
     background-color: #484848;
 }
+
+.switch input:checked+.toggle>.right.green {
+    color: #00FF00;
+    text-shadow: rgb(0, 0, 0) 0 0 2px, rgb(0, 255, 0) 0 0 9px, rgb(255,255,255) 0 0 15px;
+    background-color: #484848;
+}
