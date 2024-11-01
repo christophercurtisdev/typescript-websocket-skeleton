@@ -67,13 +67,10 @@ export default class Player {
         if (data.request == 'join') {
             let responseData = new InspectorData();
             responseData.stats = ['Stats information'];
+            this.lobby = ReactorServer.joinLobby(this, data.lobbyCode);
             return responseData;
         } else if (data.request == 'create') {
-
-            // Move this to the if above
             this.lobby = ReactorServer.createLobby(this);
-            //
-
             let responseData = new ControllerData();
             responseData.board = new Map();
             return responseData;

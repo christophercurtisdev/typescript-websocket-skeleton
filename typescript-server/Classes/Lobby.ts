@@ -19,7 +19,6 @@ export default class Lobby {
             this.startReactor();
         } else {
             this.controller = player;
-            this.startReactor();
         }
     }
 

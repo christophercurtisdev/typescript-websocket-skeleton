@@ -1,3 +1,9 @@
+h1 {
+    font-size: 72px;
+    background: -webkit-linear-gradient(red, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
 .resizable {
     width: 50%;

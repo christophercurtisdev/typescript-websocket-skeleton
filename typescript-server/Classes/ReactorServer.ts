@@ -6,7 +6,7 @@ export default class ReactorServer {
 
     private static singleton: ReactorServer;
     webSocketServer: WebSocket.Server<typeof WebSocket, any>;
-    lobbies: Lobby[] = [];
+    lobbies: any = {};
     players: Player[] = [];
 
 
@@ -32,19 +32,27 @@ export default class ReactorServer {
         console.log('Creating a new lobby: '+lobbyCode);
         let lobby = new Lobby(lobbyCode);
         lobby.addPlayer(player);
-        ReactorServer.instance().lobbies.push(lobby);
+        ReactorServer.instance().lobbies[lobbyCode] = lobby;
         return lobby;
+    }
+
+    static joinLobby(player: Player, code: string): Lobby {
+        let lobbies = ReactorServer.instance().lobbies;
+        if (lobbies[code]) {
+            lobbies[code].addPlayer(player);
+            return lobbies[code]
+        }
+        console.log(`Lobby ${code} not found.`);
+        return new Lobby('');
     }
 
     static destroyLobby(lobby: Lobby) {
         let lobbies = ReactorServer.instance().lobbies;
-        for (let i = 0; i < lobbies.length; i++) {
-            if (lobby.code == lobbies[i].code) {
-                console.log('Killing lobby');
-                lobby.stopGame();
-                delete lobbies[i];
-            }
+        let code = lobby.code;
+        if (lobbies[code]) {
+            lobbies[code].stopGame();
         }
+        delete lobbies[code];
     }
 
     private constructor(options: ServerOptions<typeof WebSocket, any>) {
