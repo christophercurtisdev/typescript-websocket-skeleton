@@ -65,7 +65,7 @@ export default class Player {
     {
         let data = clientMessage.data;
         if (data.request == 'join') {
-            let responseData = new InspectorData();
+            let responseData = new InspectorData({});
             responseData.stats = ['Stats information'];
             this.lobby = ReactorServer.joinLobby(this, data.lobbyCode);
             return responseData;
@@ -85,6 +85,6 @@ export default class Player {
 
     playerMessage(data: any) : InspectorData
     {
-        return new InspectorData();
+        return new InspectorData({});
     }
 }

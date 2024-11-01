@@ -1,5 +1,7 @@
+import InspectorData from "./Data/InspectorData";
 import Player from "./Player";
 import Reactor from "./Reactor";
+import ServerResponse from "./ServerResponse";
 
 export default class Lobby {
     code: string;
@@ -31,6 +33,9 @@ export default class Lobby {
     }
 
     private lobbyTick() {
-        console.log(`Lobby ${this.code} Tick`);
+        this.reactor.tick();
+        let inspectorData = new InspectorData(this.reactor.stats());
+        let stats = new ServerResponse(inspectorData);
+        this.inspector?.send(stats);
     }
 }
