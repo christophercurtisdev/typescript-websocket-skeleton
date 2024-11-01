@@ -1,11 +1,3 @@
-import Server from './Classes/Server';
+import ReactorServer from './Classes/ReactorServer';
 
-let testServer = new Server({ port: 8082 });
-
-// let lobby = new Lobby('ABC123');
-
-// let player1 = new Player();
-// let player2 = new Player();
-
-// lobby.addPlayer(player1);
-// lobby.addPlayer(player2);
+let testServer = ReactorServer.instance({ port: 8082 });

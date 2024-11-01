@@ -4,11 +4,14 @@ import InspectorData from './Data/InspectorData';
 import ClientRequest from './ClientRequest';
 import ControllerData from './Data/ControllerData';
 import PlayerData from './Data/PlayerData';
+import ReactorServer from './ReactorServer';
+import Lobby from './Lobby';
 
 
 export default class Player {
     webSocket: WebSocket;
     username?: string;
+    lobby?: Lobby;
 
     static CLIENT_LOBBY_REQUEST = 'LOBBY_REQUEST';
     static CLIENT_BOARD_REQUEST = 'BOARD_UPDATE';
@@ -17,9 +20,7 @@ export default class Player {
     constructor(webSocket: WebSocket) {
         this.webSocket = webSocket;
         this.webSocket.on('message', data => this.message(data));
-        this.webSocket.on('close', function () {
-            console.log('Client Disconnected');
-        });
+        this.webSocket.on('close', data => this.close(data));
     }
 
     send(response: ServerResponse) {
@@ -32,19 +33,25 @@ export default class Player {
         this.send(response);
     }
 
+    close(data: Number) {
+        if (this.lobby) {
+            ReactorServer.destroyLobby(this.lobby);
+        }
+    }
+
     parseMessage(clientData: RawData) : ServerResponse {
         let responseData = {} as PlayerData;
         try {
             let clientMessage = JSON.parse(clientData.toString()) as ClientRequest;
             switch (clientMessage.type.toUpperCase()) {
-                case Player.CLIENT_LOBBY_REQUEST:
-                    responseData = this.lobbyRequest(clientMessage);
-                    break;
                 case Player.CLIENT_BOARD_REQUEST:
                     responseData = this.boardUpdate(clientMessage);
                     break;
                 case Player.CLIENT_MESSAGE_REQUEST:
                     responseData = this.playerMessage(clientMessage);
+                    break;
+                case Player.CLIENT_LOBBY_REQUEST:
+                    responseData = this.lobbyRequest(clientMessage);
                     break;
             }
             return new ServerResponse(responseData);
@@ -58,13 +65,18 @@ export default class Player {
     {
         let data = clientMessage.data;
         if (data.request == 'join') {
-            let data = new InspectorData();
-            data.stats = ['Stats information'];
-            return data;
+            let responseData = new InspectorData();
+            responseData.stats = ['Stats information'];
+            return responseData;
         } else if (data.request == 'create') {
-            let data = new ControllerData();
-            data.board = new Map();
-            return data;
+
+            // Move this to the if above
+            this.lobby = ReactorServer.createLobby(this);
+            //
+
+            let responseData = new ControllerData();
+            responseData.board = new Map();
+            return responseData;
         }
         return new PlayerData();
     }

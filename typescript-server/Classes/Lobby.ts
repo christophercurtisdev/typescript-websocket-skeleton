@@ -6,6 +6,7 @@ export default class Lobby {
     reactor: Reactor
     inspector?: Player;
     controller?: Player;
+    gameClock?: NodeJS.Timeout;
 
     constructor(code: string) {
         this.code = code;
@@ -15,8 +16,22 @@ export default class Lobby {
     addPlayer(player: Player) {
         if (this.controller) {
             this.inspector = player;
+            this.startReactor();
         } else {
             this.controller = player;
+            this.startReactor();
         }
+    }
+
+    stopGame() {
+        clearInterval(this.gameClock);
+    }
+
+    private startReactor() {
+        this.gameClock = setInterval(() => this.lobbyTick(), 250);
+    }
+
+    private lobbyTick() {
+        console.log(`Lobby ${this.code} Tick`);
     }
 }
