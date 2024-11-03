@@ -65,26 +65,28 @@ export default class Player {
     {
         let data = clientMessage.data;
         if (data.request == 'join') {
-            let responseData = new InspectorData({});
+            let responseData = new InspectorData();
             responseData.stats = ['Stats information'];
             this.lobby = ReactorServer.joinLobby(this, data.lobbyCode);
             return responseData;
         } else if (data.request == 'create') {
             this.lobby = ReactorServer.createLobby(this);
             let responseData = new ControllerData();
-            responseData.board = new Map();
             return responseData;
         }
         return new PlayerData();
     }
 
-    boardUpdate(data: any) : ControllerData
+    boardUpdate(clientMessage: any) : ControllerData
     {
-        return new ControllerData();
+        // Return the state of the board to the client (eg, A4 can't be engeged because it's ruptured so { ... A4: false ...})
+        let clientBoard = new ControllerData(clientMessage.data);
+        return this.lobby?.boardUpdate(clientBoard) ?? new ControllerData();
     }
 
-    playerMessage(data: any) : InspectorData
+    playerMessage(clientMessage: any) : InspectorData
     {
-        return new InspectorData({});
+        // Return a confirmation message saying the message was successfully sent to the client
+        return new InspectorData();
     }
 }

@@ -1,3 +1,4 @@
+import ControllerData from "./Data/ControllerData";
 import ReactorRod from "./ReactorRod";
 
 export default class Reactor {
@@ -66,5 +67,11 @@ export default class Reactor {
             }
         }
         return engagedRodCount;
+    }
+
+    setControls(controllerData: ControllerData) {
+        for (let input in controllerData.rods) {
+            this.rods[input].engaged = controllerData.rods[input];
+        }
     }
 }

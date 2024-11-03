@@ -1,3 +1,4 @@
+import ControllerData from "./Data/ControllerData";
 import InspectorData from "./Data/InspectorData";
 import Player from "./Player";
 import Reactor from "./Reactor";
@@ -26,6 +27,10 @@ export default class Lobby {
 
     stopGame() {
         clearInterval(this.gameClock);
+    }
+
+    boardUpdate(controllerData: ControllerData) {
+        this.reactor.setControls(controllerData);
     }
 
     private startReactor() {

@@ -12,7 +12,7 @@ export default class ServerResponse {
     static UNKNOWN = "UNKNOWN";
 
     constructor(data: ControllerData | InspectorData) {
-        this.status = ServerResponse.UNKNOWN
+        this.status = ServerResponse.SUCCESS_STATUS
         this.data = data;
     }
 
