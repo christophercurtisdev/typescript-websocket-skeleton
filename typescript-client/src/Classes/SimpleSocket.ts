@@ -10,9 +10,9 @@ export default class SimpleSocket {
         CLIENT_MESSAGE_REQUEST: 'MESSAGE'
     };
 
-    constructor(url: string) {
+    constructor(url: string, messageCallback: any) {
         this.webSocket = new WebSocket(url);
-        this.initialiseWebsocket();
+        this.initialiseWebsocket(messageCallback);
     }
 
     sendBoardData(boardData: BoardData) {
@@ -33,9 +33,9 @@ export default class SimpleSocket {
         this.webSocketSend(data);
     }
     
-    private initialiseWebsocket() {
+    private initialiseWebsocket(messageCallback: any) {
         this.webSocket.onopen = (event) => this.webSocketOpen(event);
-        this.webSocket.onmessage = (data) => this.webSocketMessage(data)
+        this.webSocket.onmessage = (data) => messageCallback(data) ?? this.webSocketMessage(data)
     }
 
 
