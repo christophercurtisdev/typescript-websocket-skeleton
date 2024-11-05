@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-    <div style="font-family: 'Courier New', Courier, monospace; text-align: center;">
-        <h1>The Reactor</h1>
-        <button id="createLobbyButton">Create Lobby</button>
-        <button id="joinLobbyButton">Join Lobby</button>
-        <br>
-        <input type="text" name="lobby_code" id="lobbyCode" placeholder="Lobby Code">
+    <input type="hidden" id="playerType" value="">
+    <div id="main">
+        <div style="font-family: 'Courier New', Courier, monospace; text-align: center;">
+            <h1>The Reactor</h1>
+            <button id="createLobbyButton">Create Lobby</button>
+            <button id="joinLobbyButton">Join Lobby</button>
+            <br>
+            <input type="text" name="lobby_code" id="lobbyCode" placeholder="Lobby Code">
+        </div>
     </div>
 </body>
 
 <script src="index.js"></script>
+
 </html>

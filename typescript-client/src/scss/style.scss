@@ -23,9 +23,12 @@ h1 {
 .draggable {
     position: absolute;
     width: fit-content;
-    background-color: #FFFFFF40;
     color: white;
     border-radius: 0.75em;
     touch-action: none;
     user-select: none;
+
+    &.bordered {
+        background-color: #FFFFFF40;
+    }
 }
