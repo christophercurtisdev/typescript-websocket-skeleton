@@ -6,6 +6,7 @@ import ControllerData from './Data/ControllerData';
 import PlayerData from './Data/PlayerData';
 import ReactorServer from './ReactorServer';
 import Lobby from './Lobby';
+import MessageData from './Data/MessageData';
 
 
 export default class Player {
@@ -48,7 +49,7 @@ export default class Player {
                     responseData = this.boardUpdate(clientMessage);
                     break;
                 case Player.CLIENT_MESSAGE_REQUEST:
-                    responseData = this.playerMessage(clientMessage);
+                    responseData = this.sendMessage(clientMessage);
                     break;
                 case Player.CLIENT_LOBBY_REQUEST:
                     responseData = this.lobbyRequest(clientMessage);
@@ -84,9 +85,12 @@ export default class Player {
         return this.lobby?.boardUpdate(clientBoard) ?? new ControllerData();
     }
 
-    playerMessage(clientMessage: any) : InspectorData
+    sendMessage(clientMessage: any) : MessageData
     {
         // Return a confirmation message saying the message was successfully sent to the client
-        return new InspectorData();
+        console.log(clientMessage);
+        let message = new MessageData(clientMessage.data);
+        this.lobby?.inspectorMessage(message);
+        return message;
     }
 }

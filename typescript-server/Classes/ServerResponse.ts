@@ -1,17 +1,18 @@
 import ControllerData from "./Data/ControllerData";
 import InspectorData from "./Data/InspectorData";
+import MessageData from "./Data/MessageData";
 import PlayerData from "./Data/PlayerData";
 
 export default class ServerResponse {
     status: string
-    data: ControllerData | InspectorData;
+    data: ControllerData | InspectorData | MessageData;
 
     static SUCCESS_STATUS = "SUCCESS";
     static FAIL_STATUS = "FAIL";
     static PENDING_STATUS = "PENDING";
     static UNKNOWN = "UNKNOWN";
 
-    constructor(data: ControllerData | InspectorData) {
+    constructor(data: ControllerData | InspectorData | MessageData) {
         this.status = ServerResponse.SUCCESS_STATUS
         this.data = data;
     }

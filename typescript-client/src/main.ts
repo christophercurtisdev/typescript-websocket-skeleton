@@ -63,7 +63,7 @@ $(function () {
             if (e.which == 13) {
                 let message = $('#terminalInput').val() as string;
                 $('#terminalInput').val('');
-                reactorSocket.sendMessage({ value: message }); // Send a message object
+                reactorSocket.sendMessage({ body: message }); // Send a message object
             }
         });
     }

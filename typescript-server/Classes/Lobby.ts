@@ -1,5 +1,6 @@
 import ControllerData from "./Data/ControllerData";
 import InspectorData from "./Data/InspectorData";
+import MessageData from "./Data/MessageData";
 import Player from "./Player";
 import Reactor from "./Reactor";
 import ServerResponse from "./ServerResponse";
@@ -31,6 +32,11 @@ export default class Lobby {
 
     boardUpdate(controllerData: ControllerData) {
         this.reactor.setControls(controllerData);
+    }
+
+    inspectorMessage(messageData: MessageData) {
+        let response = new ServerResponse(messageData);
+        this.controller?.send(response);
     }
 
     private startReactor() {

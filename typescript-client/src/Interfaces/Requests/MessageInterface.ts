@@ -1,3 +1,3 @@
 export default interface MessageInterface {
-    value: string;
+    body: string;
 }
