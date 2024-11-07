@@ -87,12 +87,10 @@ $(function () {
     function updateControllerValues(response: MessageEvent<any>) {
         let reactorResponse = JSON.parse(response.data);
         let data = reactorResponse['data'];
-        console.log(data);
         printMessage(data['body']);
     }
 
     function printMessage(message: any) {
-        console.log(message);
         $('#paper').html(message);
     }
 });
