@@ -2,6 +2,8 @@ import SimpleSocket from "./Classes/SimpleSocket.js";
 import $ from "jquery";
 import interact from "interactjs";
 
+
+// Entry point to the game (sorry for the mess)
 $(function () {
 
     let positions: any = [];
@@ -56,6 +58,16 @@ $(function () {
             });
             reactorSocket.sendBoardData({ board: board }); // Send an instruction object
         });
+
+        $('#messageLog').on('click', function(e) {
+            let newPaper = $('.paper').first().clone();
+            newPaper.html($(this).html());
+            newPaper.attr('id', Date.now());
+            newPaper.css(`transform', 'translate(${$(this).position().left}px, ${$(this).position().top}px)`)
+            $('#main').append(newPaper);
+            console.log($(this).position())
+            $(this).html('');
+        });
     }
 
     function initialiseStatsListeners() {
@@ -88,6 +100,9 @@ $(function () {
         let reactorResponse = JSON.parse(response.data);
         let data = reactorResponse['data'];
         printMessage(data['body']);
+        if (data['type'] == 'MESSAGE') {
+            printMessage(data['body']);
+        }
     }
 
     function printMessage(message: any) {
