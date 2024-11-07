@@ -32,7 +32,7 @@ $(function () {
             reactorSocket.sendLobbyRequest({ request: 'create' }); // Send a lobby request object
             $('#main').load('controller.html', function (response, status) {
                 initialiseControllerListeners();
-                $('input#playerType').val('contorller');
+                $('input#playerType').val('controller');
             });
         });
 
@@ -85,6 +85,14 @@ $(function () {
     }
 
     function updateControllerValues(response: MessageEvent<any>) {
+        let reactorResponse = JSON.parse(response.data);
+        let data = reactorResponse['data'];
+        console.log(data);
+        printMessage(data['body']);
+    }
 
+    function printMessage(message: any) {
+        console.log(message);
+        $('#paper').html(message);
     }
 });
