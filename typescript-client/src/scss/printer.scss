@@ -10,14 +10,10 @@
     width: 300px;
     border: 1px solid;
     background: white;
-    border: none;
-    background: white;
-    -webkit-box-shadow: 0 8px 6px -6px black;
-    -moz-box-shadow: 0 8px 6px -6px black;
-    box-shadow: 0 8px 6px -6px black;
+    border: 1px black solid;
     --mask:
-        conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top/20px 51% repeat-x,
-        conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom/20px 51% repeat-x;
+        conic-gradient(from 135deg at top, #0002, #000 1deg 89deg, #0002 90deg) top/20px 51% repeat-x,
+        conic-gradient(from -45deg at bottom, #0002, #000 1deg 89deg, #0002 90deg) bottom/20px 51% repeat-x;
     -webkit-mask: var(--mask);
     mask: var(--mask);
 }
@@ -30,7 +26,7 @@
     position: absolute;
     left: 50%;
     top: -16px;
-    z-index: 1;
+    z-index: 9999;
 }
 
 .pin:after {
@@ -86,11 +82,10 @@
     border: 1px solid;
     background: white;
     border: none;
-    background: white;
     -webkit-box-shadow: 0 8px 6px -6px black;
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
-    --mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50%/20px 100%;
+    --mask: conic-gradient(from 135deg at top, #0002, #000 1deg 89deg, #0002 90deg) 50%/20px 100%;
     -webkit-mask: var(--mask);
     mask: var(--mask);
 }

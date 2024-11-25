@@ -60,8 +60,8 @@ $(function () {
         });
 
         $('#messageLog').on('click', function(e) {
-            let newPaper = $('.paper').first().clone();
-            newPaper.html($(this).html());
+            let newPaper = $('#controllerInstructions').clone();
+            newPaper.find('.paper').first().html($(this).html());
             newPaper.attr('id', Date.now());
             newPaper.css(`transform', 'translate(${$(this).position().left}px, ${$(this).position().top}px)`)
             $('#main').append(newPaper);
@@ -73,6 +73,7 @@ $(function () {
     function initialiseStatsListeners() {
         $(document).on('keypress', function (e) {
             if (e.which == 13) {
+                e.preventDefault();
                 let message = $('#terminalInput').val() as string;
                 $('#terminalInput').val('');
                 reactorSocket.sendMessage({ body: message }); // Send a message object
@@ -99,13 +100,25 @@ $(function () {
     function updateControllerValues(response: MessageEvent<any>) {
         let reactorResponse = JSON.parse(response.data);
         let data = reactorResponse['data'];
-        printMessage(data['body']);
         if (data['type'] == 'MESSAGE') {
             printMessage(data['body']);
         }
     }
 
-    function printMessage(message: any) {
-        $('#paper').html(message);
+    function printMessage(message: string) {
+        let sanitisedMessage = message.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        if(sanitisedMessage !== message) {
+            return $('#messageLog').html( $('#messageLog').html() + '<p>ERROR IN MESSAGE</p>' );
+        }
+        let messageParts = sanitisedMessage.split(' ');
+        console.log(messageParts);
+        console.log(messageParts[0]);
+        console.log($(`#${messageParts[0]}`).length);
+        if ($(`#${messageParts[0]}`).length) {
+            $('#messageLog').html( $('#messageLog').html() + '<p>' + sanitisedMessage + '</p>' );
+            return;
+        }
+
+        return $('#messageLog').html( $('#messageLog').html() + '<p>ERROR IN MESSAGE</p>' );
     }
 });
