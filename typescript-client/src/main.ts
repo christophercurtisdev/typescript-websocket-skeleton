@@ -6,6 +6,13 @@ import interact from "interactjs";
 // Entry point to the game (sorry for the mess)
 $(function () {
 
+    // Show Inspector view for Testing
+    // $('#main').load('inspector.html', function (response, status) {
+    //     initialiseStatsListeners();
+    //     $('input#playerType').val('inspector');
+    // });
+    // -------------------------------
+
     let positions: any = [];
 
     interact('.draggable').draggable({
@@ -59,7 +66,7 @@ $(function () {
             reactorSocket.sendBoardData({ board: board }); // Send an instruction object
         });
 
-        $('#messageLog').on('click', function(e) {
+        $('#messageLog').on('click', function (e) {
             let newPaper = $('#controllerInstructions').clone();
             newPaper.find('.paper').first().html($(this).html());
             newPaper.attr('id', Date.now());
@@ -71,6 +78,7 @@ $(function () {
     }
 
     function initialiseStatsListeners() {
+        initialiseSplitFlap();
         $(document).on('keypress', function (e) {
             if (e.which == 13) {
                 e.preventDefault();
@@ -106,19 +114,23 @@ $(function () {
     }
 
     function printMessage(message: string) {
-        let sanitisedMessage = message.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-        if(sanitisedMessage !== message) {
-            return $('#messageLog').html( $('#messageLog').html() + '<p>ERROR IN MESSAGE</p>' );
+        let sanitisedMessage = message.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        if (sanitisedMessage !== message) {
+            return $('#messageLog').html($('#messageLog').html() + '<p>ERROR IN MESSAGE</p>');
         }
         let messageParts = sanitisedMessage.split(' ');
         console.log(messageParts);
         console.log(messageParts[0]);
         console.log($(`#${messageParts[0]}`).length);
         if ($(`#${messageParts[0]}`).length) {
-            $('#messageLog').html( $('#messageLog').html() + '<p>' + sanitisedMessage + '</p>' );
+            $('#messageLog').html($('#messageLog').html() + '<p>' + sanitisedMessage + '</p>');
             return;
         }
 
-        return $('#messageLog').html( $('#messageLog').html() + '<p>ERROR IN MESSAGE</p>' );
+        return $('#messageLog').html($('#messageLog').html() + '<p>ERROR IN MESSAGE</p>');
+    }
+
+    function initialiseSplitFlap() {
+        
     }
 });

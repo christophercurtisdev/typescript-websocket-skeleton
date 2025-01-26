@@ -40,7 +40,7 @@ This app is supposed to be as simple as possible. As such, it uses very few pack
 **It is by no means supposed to be efficient.**
 
 
-- Run Client: `live-server --port=8080`
+- Run Client: `live-server public --port=8080`
 - Run Server: `node dist/index.js` 
 - Compile Server: `tsc -w`
 - Compile Client: `npm run build`
