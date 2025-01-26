@@ -21,10 +21,11 @@ export default class ControllerData extends PlayerData {
         A17: false,
     }
 
-    constructor(data: any = {}) {
+    constructor(lobbyCode: string = '', rods: any = {}) {
         super();
-        for (let input in data) {
-            this.rods[input] = data[input];
+        this.lobbyCode = lobbyCode;
+        for (let rod in rods) {
+            this.rods[rod] = rods[rod];
         }
     }
 }

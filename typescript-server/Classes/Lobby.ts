@@ -32,6 +32,9 @@ export default class Lobby {
 
     boardUpdate(controllerData: ControllerData) {
         this.reactor.setControls(controllerData);
+        controllerData.lobbyCode = this.code;
+        console.log(controllerData);
+        return controllerData;
     }
 
     inspectorMessage(messageData: MessageData) {
@@ -45,7 +48,7 @@ export default class Lobby {
 
     private lobbyTick() {
         this.reactor.tick();
-        let inspectorData = new InspectorData(this.reactor.stats());
+        let inspectorData = new InspectorData(this.code, this.reactor.stats());
         let stats = new ServerResponse(inspectorData);
         this.inspector?.send(stats);
     }

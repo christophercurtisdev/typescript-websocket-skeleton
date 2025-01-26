@@ -81,7 +81,7 @@ export default class Player {
     boardUpdate(clientMessage: any) : ControllerData
     {
         // Return the state of the board to the client (eg, A4 can't be engeged because it's ruptured so { ... A4: false ...})
-        let clientBoard = new ControllerData(clientMessage.data);
+        let clientBoard = new ControllerData(this.lobby?.code, clientMessage.data);
         return this.lobby?.boardUpdate(clientBoard) ?? new ControllerData();
     }
 

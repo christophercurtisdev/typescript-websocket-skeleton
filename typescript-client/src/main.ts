@@ -108,6 +108,8 @@ $(function () {
     function updateControllerValues(response: MessageEvent<any>) {
         let reactorResponse = JSON.parse(response.data);
         let data = reactorResponse['data'];
+        console.log(data);
+        $('#lobbyCode').html(data['lobbyCode'])
         if (data['type'] == 'MESSAGE') {
             printMessage(data['body']);
         }
