@@ -13,6 +13,7 @@ $(function () {
     // });
     // -------------------------------
 
+    let splitFlapTimeout: any = null;
     let positions: any = [];
 
     interact('.draggable').draggable({
@@ -72,7 +73,6 @@ $(function () {
             newPaper.attr('id', Date.now());
             newPaper.css(`transform', 'translate(${$(this).position().left}px, ${$(this).position().top}px)`)
             $('#main').append(newPaper);
-            console.log($(this).position())
             $(this).html('');
         });
     }
@@ -108,8 +108,7 @@ $(function () {
     function updateControllerValues(response: MessageEvent<any>) {
         let reactorResponse = JSON.parse(response.data);
         let data = reactorResponse['data'];
-        console.log(data);
-        $('#lobbyCode').html(data['lobbyCode'])
+        $('#lobbyCode').html(data['lobbyCode']);
         if (data['type'] == 'MESSAGE') {
             printMessage(data['body']);
         }
@@ -133,6 +132,38 @@ $(function () {
     }
 
     function initialiseSplitFlap() {
+        $('#random-number-button').on('click', function() {
+            updateSplitFlap(Math.floor(Math.random()*9999)+1);
+        })
+    }
+
+    function updateSplitFlap(newValue: number) {
+
+        if (splitFlapTimeout) {
+            clearTimeout(splitFlapTimeout);
+            splitFlapTimeout = null;
+        }
+        // ts and ba starts as the current number
+        let currentNumbers = $('#temperature').attr('data-temperature')?.split('') ?? ['0','0','0','0'];
+        let newNumbers = String(newValue).split('');
+
+        $('#temperature').attr('data-temperature', newValue);
+
+        $('#temperature .splitFlap').each(function(index) {
+            $(this).find('.top-flap.animate').html(currentNumbers[index]);
+            $(this).find('.top-flap.stationary').html(newNumbers[index]);
+            $(this).find('.bottom-flap.stationary').html(currentNumbers[index]);
+        });
+
+        // Remove animate class
+        let animatedElements = $('#temperature .animate');
+        $(animatedElements).removeClass('animate');
+        splitFlapTimeout = setTimeout(function () {
+            $('#temperature .splitFlap').each(function(index) {
+                $(this).find('.bottom-flap:not(.stationary)').html(newNumbers[index]);
+            });
+            $(animatedElements).addClass('animate');
+        }, 100);
         
     }
 });

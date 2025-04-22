@@ -66,13 +66,13 @@ export default class Player {
     {
         let data = clientMessage.data;
         if (data.request == 'join') {
-            let responseData = new InspectorData();
+            let responseData = new InspectorData(this.lobby?.code);
             responseData.stats = ['Stats information'];
             this.lobby = ReactorServer.joinLobby(this, data.lobbyCode);
             return responseData;
         } else if (data.request == 'create') {
             this.lobby = ReactorServer.createLobby(this);
-            let responseData = new ControllerData();
+            let responseData = new ControllerData(this.lobby?.code);
             return responseData;
         }
         return new PlayerData();
