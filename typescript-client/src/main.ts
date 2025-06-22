@@ -25,8 +25,10 @@ $(function () {
                 position.x += event.dx;
                 position.y += event.dy;
 
-                event.target.style.transform =
-                    `translate(${position.x}px, ${position.y}px)`;
+                event.target.style.top =
+                    `${position.y}px`
+                event.target.style.left =
+                    `${position.x}px`;
             }
         }
     });
@@ -71,7 +73,6 @@ $(function () {
             let newPaper = $('#controllerInstructions').clone();
             newPaper.find('.paper').first().html($(this).html());
             newPaper.attr('id', Date.now());
-            newPaper.css(`transform', 'translate(${$(this).position().left}px, ${$(this).position().top}px)`)
             $('#main').append(newPaper);
             $(this).html('');
         });
@@ -131,6 +132,7 @@ $(function () {
         return $('#messageLog').html($('#messageLog').html() + '<p>ERROR IN MESSAGE</p>');
     }
 
+    //  TESTING
     let splitflapNumber = 0;
     function initialiseSplitFlap() {
         $('#random-number-button').on('click', function() {
@@ -138,6 +140,7 @@ $(function () {
             splitflapNumber++;
         })
     }
+    // TESTING
 
     function updateSplitFlap(newValue: number) {
 
