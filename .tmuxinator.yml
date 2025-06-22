@@ -1,0 +1,15 @@
+name: websockets
+root: ./
+attach: true
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - cd typescript-server; tsc -w
+        - cd typescript-server; node dist/index.js
+  - client:
+      layout: even-horizontal
+      panes:
+        - cd typescript-client; live-server public --port=8080
+        - cd typescript-client; npm run build
