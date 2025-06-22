@@ -43,7 +43,7 @@ export default class Lobby {
     }
 
     private startReactor() {
-        this.gameClock = setInterval(() => this.lobbyTick(), 250);
+        this.gameClock = setInterval(() => this.lobbyTick(), 1000);
     }
 
     private lobbyTick() {

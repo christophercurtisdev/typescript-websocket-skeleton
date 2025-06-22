@@ -131,13 +131,17 @@ $(function () {
         return $('#messageLog').html($('#messageLog').html() + '<p>ERROR IN MESSAGE</p>');
     }
 
+    let splitflapNumber = 0;
     function initialiseSplitFlap() {
         $('#random-number-button').on('click', function() {
-            updateSplitFlap(Math.floor(Math.random()*9999)+1);
+            updateSplitFlap(splitflapNumber);
+            splitflapNumber++;
         })
     }
 
     function updateSplitFlap(newValue: number) {
+
+        let newValueString = String(newValue).padStart(4, '0');
 
         if (splitFlapTimeout) {
             clearTimeout(splitFlapTimeout);
@@ -145,9 +149,9 @@ $(function () {
         }
         // ts and ba starts as the current number
         let currentNumbers = $('#temperature').attr('data-temperature')?.split('') ?? ['0','0','0','0'];
-        let newNumbers = String(newValue).split('');
+        let newNumbers = newValueString.padStart(4, '0').split('');
 
-        $('#temperature').attr('data-temperature', newValue);
+        $('#temperature').attr('data-temperature', newValueString);
 
         $('#temperature .splitFlap').each(function(index) {
             $(this).find('.top-flap.animate').html(currentNumbers[index]);
@@ -160,9 +164,12 @@ $(function () {
         $(animatedElements).removeClass('animate');
         splitFlapTimeout = setTimeout(function () {
             $('#temperature .splitFlap').each(function(index) {
-                $(this).find('.bottom-flap:not(.stationary)').html(newNumbers[index]);
+                if(currentNumbers[index] != newNumbers[index]) {
+                    $(this).find('.bottom-flap:not(.stationary)').html(newNumbers[index]);
+                    $(this).find('.top-flap:not(.stationary)').addClass('animate');
+                    $(this).find('.bottom-flap:not(.stationary)').addClass('animate');
+                }
             });
-            $(animatedElements).addClass('animate');
         }, 100);
         
     }
